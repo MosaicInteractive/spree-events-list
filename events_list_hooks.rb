@@ -40,4 +40,6 @@ class EventsListHooks < Spree::ThemeSupport::HookListener
     %(<%=  tab(:events)  %>)
    end
 
+  insert_after :admin_inside_head, "admin/shared/tiny_mce"
+
 end

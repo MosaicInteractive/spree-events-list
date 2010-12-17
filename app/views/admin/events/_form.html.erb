@@ -1,21 +1,3 @@
-<% content_for :head do %>
-
-     <%= javascript_include_tag 'jquery/jquery.js' %>
-     <%= javascript_include_tag 'wymeditor/jquery.wymeditor.pack.js' %>
-    
-	<script type="text/javascript" charset="utf-8">
-		
-		var $j = jQuery.noConflict();
-		$j(function() {
-			$j('.wymeditor').wymeditor({
-		        xhtmlParser: 'xhtml_parser.js',
-		        cssParser:   'wym_css_parser.js'
-		    });
-		});
-
-	</script>
-<% end %>
-
 <table class="admin-report" width="545">
   <tr>
     <td valign="top"><%=t('title')%></td>
@@ -51,11 +33,11 @@
   </tr>
   <tr>
     <td valign="top"><%=t('summary')%></td>
-    <td><%= f.text_area :summary, {"style" => "width:500px; height:200px;", "class"=> "wymeditor"} %></td> 
+    <td><%= f.text_area :summary, {"style" => "width:500px; height:200px;", "class"=> "fullwidth mceEditor"} %></td> 
   </tr>
   <tr>
     <td valign="top"><%=t("full_description")%>:</td>
-    <td><%= f.text_area :full_description, {"style" => "width:500px; height:500px;", "class"=> "wymeditor"} %></td>
+    <td><%= f.text_area :full_description, {"style" => "width:500px; height:500px;", "class"=> "fullwidth mceEditor"} %></td>
   </tr>
     <tr>
     <td valign="top"><%=t('visible')%><br />
@@ -68,3 +50,5 @@
     <td><%= image_tag(@event.image.url(:thumb)) + "<br/>" if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "width:500px;"}  %></td> 
   </tr>
 </table>
+
+<%= tiny_mce_init_if_needed %>

@@ -8,9 +8,9 @@ class EventsListExtension < Spree::Extension
 
   # Please use events_list/config/routes.rb instead for extension routes.
 
-  # def self.require_gems(config)
-  #   config.gem "gemname-goes-here", :version => '1.2.3'
-  # end
+  def self.require_gems(config)
+    config.gem "tiny_mce"
+  end
 
   
   def activate

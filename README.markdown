@@ -7,7 +7,8 @@ Requirements
 ============
 
 * paperclip (should already be installed as a spree dependency)
-* wymeditor http://github.com/azimuth/spree-wymeditor
+* <strike>wymeditor http://github.com/azimuth/spree-wymeditor</strike>
+* replaced wymeditor with TinyMCE http://github.com/tinymce/tinymce
 
 
 TODO
