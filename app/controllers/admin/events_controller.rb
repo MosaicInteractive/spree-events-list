@@ -32,6 +32,8 @@ class Admin::EventsController < Admin::BaseController
     wants.html { redirect_to collection_url }
   end
 
+  create.before :create_before
+
   create.after do
     Rails.cache.delete('events')
   end
@@ -49,6 +51,11 @@ class Admin::EventsController < Admin::BaseController
         @collection.uniq!
       end
 
+    end
+
+    def create_before
+      return unless Spree::Config[:event_status_default]
+      @event.is_active = Spree::Config[:event_status_default]
     end
 
 end

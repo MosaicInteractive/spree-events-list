@@ -27,7 +27,7 @@
       </th>
     </tr>
 	
-<% @events.each do |event| %>
+<% @collection.each do |event| %>
   <%- locals = {:event => event} -%>
   <tr class="<%= cycle('even', 'odd') %>">
     <% hook :admin_events_index_rows, locals do %>
@@ -90,7 +90,7 @@
         </div>
 
         <p>
-          <%= f.check_box :visible, {:style => "vertical-align:middle;"}, "1", "" %>
+          <%= f.check_box :is_active, {:style => "vertical-align:middle;"}, "1", "" %>
           <label>
             <%= t("show_only_published_events") %>
           </label>

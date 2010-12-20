@@ -19,5 +19,10 @@ class EventsListExtension < Spree::Extension
     # Spree::BaseController.class_eval do
     #   helper YourHelper
     # end
+
+    AppConfiguration.class_eval do
+      preference :event_status_default, :integer, :default => 1
+    end
+
   end
 end

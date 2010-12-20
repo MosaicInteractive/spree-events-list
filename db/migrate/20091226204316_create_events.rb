@@ -11,7 +11,8 @@ class CreateEvents < ActiveRecord::Migration
       t.string :further_information
       t.text :summary
       t.text :full_description
-      t.boolean :visible
+      t.integer :is_active, :default => 0
+      t.datetime :published_at
       t.string :image_file_name
       t.string :image_content_type
       t.integer :image_file_size
@@ -19,6 +20,8 @@ class CreateEvents < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :events, :published_at, :name => 'events_published_at_ix'
+    add_index :events, [:is_active, :published_at], :name => 'events_is_active_published_at_ix'
   end
 
   def self.down
