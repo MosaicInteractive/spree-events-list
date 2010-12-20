@@ -1,35 +1,53 @@
-<%= render :partial => 'admin/shared/configuration_menu' %>
+<div class='toolbar'>
+  <ul class='actions'>
+    <li id="new_ot_link">
+      <%= button_link_to_remote t("new_event"),
+                          {:url => new_object_url,
+                          :method => :get,
+                          :update => "new-event"}, :icon => 'add' %>
+    </li>
+  </ul>
+  <br class='clear' />
+</div>
 
-<h1><%=t("events") %></h1>
+<h1><%= t("events") %></h1>
 
-<h2><%=t("all_events") %></h2>
-<table class="admin-report" width="545">
-	<thead>
-		<tr>
-      		<th><%=t("begin")%> - <%=t("end")%></th>
-                <th><%=t("title")%></th>
-      		<th><%=t("action")%></th>
-    	</tr>
-  	</thead>
+<%= image_tag "spinner.gif", :plugin=>"spree", :style => "display:none", :id => 'busy_indicator' %>
+<div id="new-event"></div>
+
+<table class="index">
+    <tr>
+      <% hook :admin_events_index_headers do %>
+        <th><%= order @search, :by => :begin_event, :as => t("begin") %></th>
+        <th><%= order @search, :by => :end_event, :as => t("end") %></th>
+        <th><%= order @search, :by => :title, :as => t("title") %></th>
+      <% end %>
+      <th>
+        <%= hook :admin_events_index_header_actions %>
+      </th>
+    </tr>
 	
-	<tbody>
-    	<% @events.each do |event| %>
-		<tr class="<%= cycle('even', 'odd') %>">
-			<td>
-				<%= event.begin_event.strftime("%b %d, %Y %I:%M%p") %> - <%= event.end_event.strftime("%b %d, %Y %I:%M%p")%>
-			</td>
-                        <td><%= event.title %></td>
-			<td>
-	          <%=link_to t("edit"), edit_object_url(event), :id => "edit_#{event.id}" %> |
-	          <%=link_to t("delete"), object_url(event), :method => :delete, :id => "delete_#{event.id}" %>
-	        </td>
-		</tr>
-		<% end %>
-	</tbody>
+<% @events.each do |event| %>
+  <%- locals = {:event => event} -%>
+  <tr class="<%= cycle('even', 'odd') %>">
+    <% hook :admin_events_index_rows, locals do %>
+      <td><%= event.begin_event.strftime("%b%d, %Y %I:%M%p") %></td>
+      <td><%= event.end_event.strftime("%b %d, %Y %I:%M%p") %></td>
+      <td><%= link_to h(event.title), [:edit, :admin,event] %></td>
+      <td class="actions">
+        <% hook :admin_events_index_row_actions, locals do %>
+	  <%= link_to_edit event %>
+          &nbsp;
+	  <%= link_to_delete event %>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
 </table>
 
-<%= link_to t("new_event"), new_object_url, :id => "new_event" %>
-<p>&nbsp;</p>
+<% will_paginate(:previous_label => "&#171; #{t('previous')}", :next_label => "#{t('next')} &#187;") %>
+
 <h2><%=t("global_settings")%></h2>
 <% form_tag(admin_events_settings_path, :method => :put) do -%>
   <table>
@@ -46,3 +64,44 @@
     <%= button t('update') %>
   </p>
 <% end -%>
+
+<% content_for :sidebar do %>
+  <% form_for @search do |f| %>
+    <div class="box">
+      <h3><%= t(:search) %></h3>
+      
+      <%- locals = {:f => f} -%>  
+      <% hook :admin_events_index_search, locals do %>
+        <p>
+          <label><%= t("title") %></label><br />
+          <%= f.text_field :title_contains, :size => 15 %>
+        </p>
+
+        <label><%= t("event_date_range") %></label><br />
+        <div class="yui-g date-range-filter">
+          <div class="yui-u sub-field first">
+            <%= f.unobtrusive_date_text_picker :begin_event_after %><br />
+            <label class="sub"><%= t("begin") %></label>
+          </div>
+          <div class="yui-u sub-field">
+            <%= f.unobtrusive_date_text_picker :begin_event_before %><br />
+            <label><%= t("end") %></label>
+          </div>
+        </div>
+
+        <p>
+          <%= f.check_box :visible, {:style => "vertical-align:middle;"}, "1", "" %>
+          <label>
+            <%= t("show_only_published_events") %>
+          </label>
+        </p>
+        <% hook :admin_events_index_search_buttons, locals do %>
+          <p class="form-buttons">
+            <%= button t("search") %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+<% end %>

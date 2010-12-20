@@ -1,54 +1,76 @@
-<table class="admin-report" width="545">
-  <tr>
-    <td valign="top"><%=t('title')%></td>
-    <td><%= f.text_field :title, {"style" => "width:500px;"} %></td>
-  </tr>
-  <tr>
-    <td valign="top"><%=t('venue')%></td>
-    <td><%= f.text_field :venue, {"style" => "width:500px;"}  %></td> 
-  </tr>
-  <tr>
-    <td valign="top"><%=t('sponsor')%></td>
-    <td><%= f.text_field :sponsor, {"style" => "width:500px;"}  %></td> 
-  </tr>
-  <tr>
-    <td valign="top"><%=t('begin')%></td>
-    <td><%= f.date_select :begin_event  %></td>
-  </tr>
-  <tr>
-    <td valign="top"><%=t('end')%></td>
-    <td><%= f.date_select :end_event %></td>
-  </tr>
-  <tr>
-    <td valign="top"><%=t('start_time')%></td>
-    <td><%= f.text_field :start_time, {"style" => "width: 500px;"} %></td>
-  </tr>
-  <tr>
-    <td valign="top"><%=t('further_information')%><br />
-	    <span class="small_help"><%=t('further_information_desc')%></span>
-	  </td>
-    <td><%= f.text_field :further_information, {"style" => "width:500px;"} %><br/>
-	    <span class="small_help">Example: <%=t('further_information_example')%></span>
-	  </td>
-  </tr>
-  <tr>
-    <td valign="top"><%=t('summary')%></td>
-    <td><%= f.text_area :summary, {"style" => "width:500px; height:200px;", "class"=> "fullwidth mceEditor"} %></td> 
-  </tr>
-  <tr>
-    <td valign="top"><%=t("full_description")%>:</td>
-    <td><%= f.text_area :full_description, {"style" => "width:500px; height:500px;", "class"=> "fullwidth mceEditor"} %></td>
-  </tr>
-    <tr>
-    <td valign="top"><%=t('visible')%><br />
-	    <span class="small_help"><%=t('visible_desc')%></span>
-	  </td>
-    <td><%= f.check_box :visible %></td> 
-  </tr>
-  <tr>
-    <td valign="top"><%=t('image')%></td>
-    <td><%= image_tag(@event.image.url(:thumb)) + "<br/>" if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "width:500px;"}  %></td> 
-  </tr>
-</table>
+<div class="yui-gc">
+  <div class="yui-u first">
+    <%- locals = {:f => f} -%>
+    <% hook :admin_event_form_left, locals do %>
+      <% f.field_container :title do %>
+        <%= f.label :title, t('title') %> <span class="required">*</span><br />
+        <%= f.text_field :title, :class => 'fullwidth title' %>
+        <%= f.error_message_on :title %>
+      <% end %>
+      
+      <% f.field_container :venue do %>
+        <%= f.label :venue, t('venue') %><br />
+        <%= f.text_field :venue, :class => 'fullwidth title' %>
+        <%= f.error_message_on :venue %>
+      <% end %>
+
+      <% f.field_container :sponsor do %>
+        <%= f.label :sponsor, t('sponsor') %><br />
+        <%= f.text_field :sponsor, :class => 'fullwidth title' %>
+        <%= f.error_message_on :sponsor %>
+      <% end %>
+
+      <% f.field_container :further_information do %>
+        <%= f.label :further_information, t('further_information') %><br />
+        <%= f.text_field :further_information, :class => 'fullwidth title' %>
+        <span class="small_help">Example: <%=t('further_information_example')%></span>
+        <%= f.error_message_on :further_information %><br />
+        <span class="small_help"><%=t('further_information_desc')%></span>
+      <% end %>
+
+      <% f.field_container :summary do %>
+        <%= f.label :summary, t('summary') %><br />
+        <%= f.text_area :summary, :class => 'fullwidth mceEditor' %>
+        <%= f.error_message_on :summary %>
+      <% end %>
+
+      <% f.field_container :full_description do %>
+        <%= f.label :full_description, t('full_description') %><br />
+        <%= f.text_area :full_description, :class => 'fullwidth mceEditor' %>
+        <%= f.error_message_on :full_description %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="yui-u">
+    <% hook :admin_event_form_right, locals do %>
+
+      <p>
+        <%= f.label :visible, t("visible")%><br />
+        
+        <%= f.radio_button :visible, 1 %><%= t("publish") %>
+        <%= f.radio_button :visible, 0 %><%= t("draft") %>
+        <%= f.error_message_on :visible %>
+      </p>
+      <h2><%= t("date_and_time") %></h2>
+      <% hook :admin_event_form_date, locals do %>
+        <p>
+          <%= f.label :begin_event, t("begin") %><br />
+          <%= f.date_select :begin_event, :class => 'fullwidth'  %> 
+        </p>
+        <p>
+          <%= f.label :end_event, t("end") %><br />
+          <%= f.date_select :end_event, :class => 'fullwidth'  %>
+        </p>
+        <p>
+          <%= f.label :start_time, t("start_time") %><br />
+          <%= f.text_field :start_time, :class => 'fullwidth'  %>
+        </p>
+        <p>
+          <%= image_tag(@event.image.url(:thumb)) + "<br/>" if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "width:500px;"}  %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
 <%= tiny_mce_init_if_needed %>
