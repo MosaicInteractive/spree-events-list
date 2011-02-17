@@ -42,4 +42,6 @@ class EventsListHooks < Spree::ThemeSupport::HookListener
 
   insert_after :admin_inside_head, "admin/shared/tiny_mce"
 
+  insert_after :home_panel1, "shared/recent_events"
+
 end

@@ -1,0 +1,27 @@
+<h2><%= t("news_and_events") %><small><%= link_to "(view all)", '/events', :title => 'view all events' %></small></h2>
+<div class="panel">
+  <table id="newsEvents">
+    <tbody>
+      <% if has_recent_events? %>
+        <% recent_events_list().each do |recent_event| -%>
+        <tr class="event" onclick="location.href='<%= recent_event.url %>'">
+          <td>
+            <%= recent_event.event_start.strftime("%d")+"-"+recent_event.event_end.strftime("%d") %><br><span class="month"><%= recent_event.event_start.strftime("%b") %></span><span class="year"><%= recent_event.event_start.strftime("%Y") %></span>
+          </td>
+          <td>
+            <h3><%= link_to recent_event.name, recent_event.url, :title => recent_event.name %></h3>
+            <p><%= recent_event.summary %></p>
+            <h4><%= recent_event.venue %></h4>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"><div id="theHrDesign"></div></td>
+        </tr>
+        <% end %>
+      <% else %>
+      <tr><td>There is currently no new news or events.  Please come back soon to find out what we're up to.
+      </td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
