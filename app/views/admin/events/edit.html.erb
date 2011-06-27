@@ -1,6 +1,9 @@
-<h1><%= t("editing_event") %></h1>
+<%= render :partial => 'admin/shared/configuration_menu' %>
 
-<% form_for(@event, :url => object_url, :html => { :multipart => true, :method => :put }) do |f| -%>
+<h1><%= t("editing_event") %></h1>
+<%= error_messages_for :event %>
+
+<%= form_for(:event, :url => object_url, :html => { :multipart => true, :method => :put }) do |f| -%>
   <%= render :partial => "form", :locals => { :f => f } %>
-  <%= render :partial => 'admin/shared/edit_resource_links' %>
+	<%= render :partial => 'admin/shared/edit_resource_links' %>
 <% end %>

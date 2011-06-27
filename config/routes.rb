@@ -1,9 +1,10 @@
-# Put your extension routes here.
-
-  map.namespace :admin do |admin|
-    admin.resources :events
-    admin.resource :events_settings
-  end  
-
-  map.connect "events", :controller => "events", :action => "index"
-  map.connect 'events/show/:id', :controller => "events", :action => "show"
+Rails.application.routes.draw do
+  namespace :admin do
+    resources :events
+		resources :events_settings
+  end
+  
+  match "/events" => "events#index"
+  match '/events/show/:id' => "events#show"
+  
+end

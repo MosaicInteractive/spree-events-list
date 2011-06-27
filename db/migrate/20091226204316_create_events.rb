@@ -13,6 +13,7 @@ class CreateEvents < ActiveRecord::Migration
       t.text :full_description
       t.integer :is_active, :default => 0
       t.datetime :published_at
+      t.boolean :visible
       t.string :image_file_name
       t.string :image_content_type
       t.integer :image_file_size
