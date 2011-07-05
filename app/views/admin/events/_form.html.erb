@@ -1,4 +1,4 @@
-<% content_for :head do %>
+<%= content_for :head do %>
 
   <%= javascript_include_tag 'jquery/jquery.js' %>
   <%= javascript_include_tag 'wymeditor/jquery.wymeditor.js' %>
@@ -31,25 +31,25 @@
   <div class="yui-u first">
     <% locals = {:f => f} %>
     <%= hook :admin_event_form_left, locals do %>
-      <% f.field_container :title do %>
+      <%= f.field_container :title do %>
         <%= f.label :title, t('title') %> <span class="required">*</span><br />
         <%= f.text_field :title, :class => 'fullwidth title' %>
         <%= f.error_message_on :title %>
       <% end %>
       
-      <% f.field_container :venue do %>
+      <%= f.field_container :venue do %>
         <%= f.label :venue, t('venue') %><br />
         <%= f.text_field :venue, :class => 'fullwidth title' %>
         <%= f.error_message_on :venue %>
       <% end %>
 
-      <% f.field_container :sponsor do %>
+      <%= f.field_container :sponsor do %>
         <%= f.label :sponsor, t('sponsor') %><br />
         <%= f.text_field :sponsor, :class => 'fullwidth title' %>
         <%= f.error_message_on :sponsor %>
       <% end %>
 
-      <% f.field_container :further_information do %>
+      <%= f.field_container :further_information do %>
         <%= f.label :further_information, t('further_information') %><br />
         <%= f.text_field :further_information, :class => 'fullwidth title' %>
         <span class="small_help">Example: <%=t('further_information_example')%></span>
@@ -57,19 +57,19 @@
         <span class="small_help"><%=t('further_information_desc')%></span>
       <% end %>
 
-      <% f.field_container :summary do %>
+      <%= f.field_container :summary do %>
         <%= f.label :summary, t('summary') %><br />
         <%= f.text_area :summary, :class => 'fullwidth mceEditor' %>
         <%= f.error_message_on :summary %>
       <% end %>
 
-      <% f.field_container :full_description do %>
+      <%= f.field_container :full_description do %>
         <%= f.label :full_description, t('full_description') %><br />
         <%= f.text_area :full_description, :class => 'fullwidth mceEditor' %>
         <%= f.error_message_on :full_description %>
       <% end %>
       
-      <% f.field_container :image do %>
+      <%= f.field_container :image do %>
         <%= f.label :image, t('event_image') %><br />
         <%= image_tag(@event.image.url(:thumb)) + "<br/>" if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "width:500px;"}  %>
       <% end %>
