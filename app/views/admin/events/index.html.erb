@@ -1,10 +1,12 @@
 <div class='toolbar'>
   <ul class='actions'>
     <li id="new_ot_link">
-      <%= button_link_to_remote t("new_event"),
-                          {:url => new_object_url,
+      <%= button_link_to t("new_event"),
+                          new_object_url,
+                          {:remote => true,
                           :method => :get,
-                          :update => "new-event"}, :icon => 'add' %>
+                          :icon => 'add',
+                          'data-update' => "new-event"} %>
     </li>
   </ul>
   <br class='clear' />
