@@ -20,9 +20,9 @@
 <table class="index">
     <tr>
       <%= hook :admin_events_index_headers do %>
-        <th><%= order @search, :by => :begin_event, :as => t("begin") %></th>
-        <th><%= order @search, :by => :end_event, :as => t("end") %></th>
-        <th><%= order @search, :by => :title, :as => t("title") %></th>
+        <th><%= sort_link @search, :begin_event, t("begin") %></th>
+        <th><%= sort_link @search, :end_event, t("end") %></th>
+        <th><%= sort_link @search, :title, t("title") %></th>
       <% end %>
       <th>
         <%= hook :admin_events_index_header_actions %>
@@ -68,7 +68,7 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= form_for @search do |f| %>
+  <%= form_for [:admin, @search] do |f| %>
     <div class="box">
       <h3><%= t(:search) %></h3>
       
@@ -82,17 +82,17 @@
         <label><%= t("event_date_range") %></label><br />
         <div class="yui-g date-range-filter">
           <div class="yui-u sub-field first">
-            <%= f.unobtrusive_date_text_picker :begin_event_after %><br />
+            <%= f.spree_date_picker :begin_event_greater_than %><br />
             <label class="sub"><%= t("begin") %></label>
           </div>
           <div class="yui-u sub-field">
-            <%= f.unobtrusive_date_text_picker :begin_event_before %><br />
+            <%= f.spree_date_picker :begin_event_less_than %><br />
             <label><%= t("end") %></label>
           </div>
         </div>
 
         <p>
-          <%= f.check_box :is_active, {:style => "vertical-align:middle;"}, "1", "" %>
+          <%= f.check_box :is_active_is_not_null, {:style => "vertical-align:middle;"}, "1", "" %>
           <label>
             <%= t("show_only_published_events") %>
           </label>
