@@ -1,13 +1,15 @@
 class Admin::EventsController < Admin::BaseController
   resource_controller
+  respond_to :html
 
 	index.response do |wants|
     wants.html { render :action => :index }
     wants.json { render :json => @collection.to_json() }
   end
 
-  new_action.response do |wants|
-    wants.html { render :action => :new, :layout => false }
+  def new
+    @event = Event.new
+    respond_with(@event)
   end
 
   update.response do |wants|

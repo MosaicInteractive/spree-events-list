@@ -19,7 +19,7 @@
 
 <table class="index">
     <tr>
-      <% hook :admin_events_index_headers do %>
+      <%= hook :admin_events_index_headers do %>
         <th><%= order @search, :by => :begin_event, :as => t("begin") %></th>
         <th><%= order @search, :by => :end_event, :as => t("end") %></th>
         <th><%= order @search, :by => :title, :as => t("title") %></th>
@@ -30,14 +30,14 @@
     </tr>
 	
 <% @collection.each do |event| %>
-  <%- locals = {:event => event} -%>
+  <% locals = {:event => event} %>
   <tr class="<%= cycle('even', 'odd') %>">
-    <% hook :admin_events_index_rows, locals do %>
+    <%= hook :admin_events_index_rows, locals do %>
       <td><%= event.begin_event.strftime("%b%d, %Y %I:%M%p") %></td>
       <td><%= event.end_event.strftime("%b %d, %Y %I:%M%p") %></td>
       <td><%= link_to h(event.title), [:edit, :admin,event] %></td>
       <td class="actions">
-        <% hook :admin_events_index_row_actions, locals do %>
+        <%= hook :admin_events_index_row_actions, locals do %>
 	  <%= link_to_edit event %>
           &nbsp;
 	  <%= link_to_delete event %>
@@ -51,7 +51,7 @@
 <% will_paginate(:previous_label => "&#171; #{t('previous')}", :next_label => "#{t('next')} &#187;") %>
 
 <h2><%=t("global_settings")%></h2>
-<% form_tag(admin_events_settings_path, :method => :put) do -%>
+<%= form_tag(admin_events_settings_path, :method => :put) do -%>
   <table>
     <tr>
       <td><label><%= t("days_before") %></label></td>
@@ -65,15 +65,15 @@
   <p class="form-buttons">
     <%= button t('update') %>
   </p>
-<% end -%>
+<% end %>
 
 <% content_for :sidebar do %>
-  <% form_for @search do |f| %>
+  <%= form_for @search do |f| %>
     <div class="box">
       <h3><%= t(:search) %></h3>
       
-      <%- locals = {:f => f} -%>  
-      <% hook :admin_events_index_search, locals do %>
+      <% locals = {:f => f} %>
+      <%= hook :admin_events_index_search, locals do %>
         <p>
           <label><%= t("title") %></label><br />
           <%= f.text_field :title_contains, :size => 15 %>
@@ -97,7 +97,7 @@
             <%= t("show_only_published_events") %>
           </label>
         </p>
-        <% hook :admin_events_index_search_buttons, locals do %>
+        <%= hook :admin_events_index_search_buttons, locals do %>
           <p class="form-buttons">
             <%= button t("search") %>
           </p>

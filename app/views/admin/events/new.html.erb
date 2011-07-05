@@ -1,103 +1,11 @@
-<<<<<<< HEAD
+<%= render :partial => 'admin/shared/configuration_menu' %>
 <%= error_messages_for :event %>
 
-<% form_for(:event, :url => collection_url, :html => { :multipart => true }) do |f| %>
+<%= form_for(:event, :url => collection_url, :html => { :multipart => true }) do |f| %>
 <fieldset>
 
-  <div class="yui-gc">                                                  
-  <div class="yui-u first">                                           
-    <%- locals = {:f => f} -%>                                        
-    <% hook :admin_event_form_left, locals do %>                      
-      <% f.field_container :title do %>                               
-        <%= f.label :title, t('title') %> <span class="required">*</span><br />
-        <%= f.text_field :title, :class => 'fullwidth title' %>       
-        <%= f.error_message_on :title %>
-      <% end %>
-      
-      <% f.field_container :venue do %>                               
-        <%= f.label :venue, t('venue') %><br />                       
-        <%= f.text_field :venue, :class => 'fullwidth title' %>       
-        <%= f.error_message_on :venue %>
-      <% end %>
-      
-      <% f.field_container :sponsor do %>                             
-        <%= f.label :sponsor, t('sponsor') %><br />                   
-        <%= f.text_field :sponsor, :class => 'fullwidth title' %>     
-        <%= f.error_message_on :sponsor %>
-      <% end %>
-      
-      <% f.field_container :further_information do %>                 
-        <%= f.label :further_information, t('further_information') %><br />
-        <%= f.text_field :further_information, :class => 'fullwidth title' %>
-        <span class="small_help">Example: <%=t('further_information_example')%></span>
-        <%= f.error_message_on :further_information %><br />
-        <span class="small_help"><%=t('further_information_desc')%></span>
-      <% end %>
-
-      <% f.field_container :summary do %>
-        <%= f.label :summary, t('summary') %><br />
-        <%= f.text_area :summary, :class => 'fullwidth mceEditor' %>  
-        <%= f.error_message_on :summary %>                            
-      <% end %>                                                       
-      
-      <% f.field_container :full_description do %>
-        <%= f.label :full_description, t('full_description') %><br /> 
-        <%= f.text_area :full_description, :class => 'fullwidth mceEditor' %>
-        <%= f.error_message_on :full_description %>                   
-      <% end %>                                                       
-
-      <% f.field_container :image do %>
-        <%= f.label :image, t('event_image') %><br />
-        <%= image_tag(@event.image.url(:thumb)) + "<br/>" if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "wi
-dth:500px;"}  %>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="yui-u">
-    <% hook :admin_event_form_right, locals do %>                     
-        
-      <p>
-        <%= f.label :is_active, t("visible")%><br />                    
-                                                                      
-        <%= f.radio_button :is_active, 1, :checked => true %><%= t("publish") %>          
-        <%= f.radio_button :is_active, 0 %><%= t("draft") %>          
-        <%= f.error_message_on :is_active %>                            
-      </p>                                                            
-      <h2><%= t("date_and_time") %></h2>
-      <% hook :admin_event_form_date, locals do %>                    
-        <p>
-          <%= f.label :begin_event, t("begin") %><br />
-          <%= f.date_select :begin_event, :class => 'fullwidth' %>
-        </p>
-        <p>
-          <%= f.label :end_event, t("end") %><br />
-          <%= f.date_select :end_event, :class => 'fullwidth' %>
-        </p>
-        <p>
-          <%= f.label :start_time, t("start_time"), :class => 'sub' %><br />
-          <%= f.text_field :start_time, :class => 'fullwidth'  %> 
-        </p>
-      <% end %>
-    <% end %>                                                         
-  </div>
-</div>
-  <%= render :partial => 'admin/shared/new_resource_links' %>
+  <%= render 'form' %>
+  <%= render 'admin/shared/new_resource_links' %>
 
 </fieldset>
 <% end %>
-
-<%= tiny_mce_init_if_needed %>
-=======
-<%= render :partial => 'admin/shared/configuration_menu' %>
-
-<h1><%= t("new_event") %></h1>
-
-<%= error_messages_for :event %>
-
-<% form_for(:event, :url => collection_url, :html => { :multipart => true }) do |f| %>
-  <%= render :partial => "form", :locals => { :f => f } %>
-  <p>
-    <%= submit_tag t("create"), {"class" => "wymupdate"}%> or <%= link_to t("cancel"), admin_events_path%>
-  </p>
-<% end %>
->>>>>>> 63dc4ad0f6c1adb57e1c6713210d564cc1baca66

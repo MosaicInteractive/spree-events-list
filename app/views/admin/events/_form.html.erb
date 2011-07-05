@@ -29,8 +29,8 @@
 
 <div class="yui-gc">
   <div class="yui-u first">
-    <%- locals = {:f => f} -%>
-    <% hook :admin_event_form_left, locals do %>
+    <% locals = {:f => f} %>
+    <%= hook :admin_event_form_left, locals do %>
       <% f.field_container :title do %>
         <%= f.label :title, t('title') %> <span class="required">*</span><br />
         <%= f.text_field :title, :class => 'fullwidth title' %>
@@ -68,10 +68,15 @@
         <%= f.text_area :full_description, :class => 'fullwidth mceEditor' %>
         <%= f.error_message_on :full_description %>
       <% end %>
+      
+      <% f.field_container :image do %>
+        <%= f.label :image, t('event_image') %><br />
+        <%= image_tag(@event.image.url(:thumb)) + "<br/>" if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "width:500px;"}  %>
+      <% end %>
     <% end %>
   </div>
   <div class="yui-u">
-    <% hook :admin_event_form_right, locals do %>
+    <%= hook :admin_event_form_right, locals do %>
 
       <p>
         <%= f.label :is_active, t("visible")%><br />
@@ -81,21 +86,18 @@
         <%= f.error_message_on :is_active %>
       </p>
       <h2><%= t("date_and_time") %></h2>
-      <% hook :admin_event_form_date, locals do %>
+      <%= hook :admin_event_form_date, locals do %>
         <p>
           <%= f.label :begin_event, t("begin") %><br />
-          <%= f.date_select :begin_event, :class => 'fullwidth'  %> 
+          <%= f.spree_date_picker :begin_event, :class => 'fullwidth'  %> 
         </p>
         <p>
           <%= f.label :end_event, t("end") %><br />
-          <%= f.date_select :end_event, :class => 'fullwidth'  %>
+          <%= f.spree_date_picker :end_event, :class => 'fullwidth'  %>
         </p>
         <p>
           <%= f.label :start_time, t("start_time") %><br />
           <%= f.text_field :start_time, :class => 'fullwidth'  %>
-        </p>
-        <p>
-          <%= image_tag(@event.image.url(:thumb)) + "<br />" if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "width:500px;"}  %>
         </p>
       <% end %>
     <% end %>
