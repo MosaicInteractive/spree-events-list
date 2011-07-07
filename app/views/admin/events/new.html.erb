@@ -1,5 +1,5 @@
 <%= render :partial => 'admin/shared/configuration_menu' %>
-<%= error_messages_for :event %>
+<%= render 'admin/shared/error_messages', :target => @event %>
 
 <%= form_for(:event, :url => collection_url, :html => { :multipart => true }) do |f| %>
 <fieldset>

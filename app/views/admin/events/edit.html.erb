@@ -1,7 +1,7 @@
 <%= render :partial => 'admin/shared/configuration_menu' %>
 
 <h1><%= t("editing_event") %></h1>
-<%= error_messages_for :event %>
+<%= render 'admin/shared/error_messages', :target => @event %>
 
 <%= form_for(:event, :url => object_url, :html => { :multipart => true, :method => :put }) do |f| -%>
   <%= render :partial => "form", :locals => { :f => f } %>

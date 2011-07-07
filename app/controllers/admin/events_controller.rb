@@ -1,32 +1,27 @@
-class Admin::EventsController < Admin::BaseController
-  resource_controller
-  respond_to :html
+class Admin::EventsController < Admin::ResourceController
+  update.after :update_after
+  create.after :create_after
+  create.before :create_before
 
-	index.response do |wants|
-    wants.html { render :action => :index }
-    wants.json { render :json => @collection.to_json() }
+	def index
+    respond_with(@event) do |wants|
+      wants.html { render :action => :index }
+      wants.json { render :json => @collection.to_json() }
+    end
   end
 
-  def new
-    @event = Event.new
-    respond_with(@event)
+  def update
+    respond_with(@event) do |wants|
+      wants.html { redirect_to edit_admin_event_url(Event.find(@event.id)) }
+    end
   end
 
-  update.response do |wants|
-    wants.html { redirect_to edit_admin_event_url(Event.find(@event.id)) }
+  def create
+    respond_with(@event) do |wants|
+      wants.html { redirect_to collection_url }
+    end
   end
 
-  update.after do
-    Rails.cache.delete('events')
-  end
-
-  create.response do |wants|
-    wants.html { redirect_to collection_url }
-  end
-
-  create.after do
-    Rails.cache.delete('events')
-  end
 
 	private
     def collection
@@ -41,6 +36,14 @@ class Admin::EventsController < Admin::BaseController
         @collection.uniq!
       end
 
+    end
+
+    def update_after
+      Rails.cache.delete('events')
+    end
+
+    def create_after
+      Rails.cache.delete('events')
     end
 
     def create_before

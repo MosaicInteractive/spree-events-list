@@ -4,9 +4,8 @@
       <%= button_link_to t("new_event"),
                           new_object_url,
                           {:remote => true,
-                          :method => :get,
                           :icon => 'add',
-                          'data-update' => "new-event"} %>
+                          :id => "admin-new-event"} %>
     </li>
   </ul>
   <br class='clear' />
