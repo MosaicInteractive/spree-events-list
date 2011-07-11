@@ -42,7 +42,7 @@
       
       <%= f.field_container :image do %>
         <%= f.label :image, t('event_image') %><br />
-        <%= image_tag(@event.image.url(:thumb)) + "<br/>" if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "width:500px;"}  %>
+        <%= image_tag(@event.image.url(:thumb)) + raw("<br/>") if not @event.image.size.nil? %><%= f.file_field :image, {"style" => "width:500px;"}  %>
       <% end %>
     <% end %>
   </div>
